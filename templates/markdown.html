@@ -1,0 +1,339 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="../static/boostrap/css/bootstrap.min.css" rel="stylesheet">
+    <script type="text/javascript" src="{% static 'jquery/jquery-3.3.1.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'boostrap/js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/doeument.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/Wechat.js' %}"></script>
+    <link rel="stylesheet" href="{% static '/plugins/editor.md-master/css/editormd.css' %}"/>
+    <script  type="text/javascript" src="{% static '/plugins/editor.md-master/editormd.js' %}"></script>
+    <script type="text/javascript" src="{% static '/plugins/editor.md-master/editormd.min.js'%}"></script>
+    <link href="../static/css/MKdown.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <style>
+
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">云协作平台</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <form class="navbar-form navbar-left">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search">
+        </div>
+        <button type="submit" class="btn btn-default">搜索</button>
+      </form>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+          <a href="#" id="useringname" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ request.session.user_name }}<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">个人信息</a></li>
+            <li><a href="#">账户信息</a></li>
+            <li><a href="#">协作满意度调查</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="#">意见反馈</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="/logout/">注销登陆</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="leftdiv">
+</div>
+
+<div class="centerdiv">
+        <div class="toolsdiv">
+{#            富文本编辑前的工具DIV#}
+        <div class="btn-group" role="group" id="toolsDivMKBefore">
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-top: 14px;margin-left: 14px;">
+      新建
+      <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu">
+      <li onclick="CreateFiles()"><a href="#"> markdown文件</a></li>
+      <li onclick="CreateF()"><a href="#">文件夹</a> </li>
+    </ul>
+  </div>
+            <p class="FocusFilename" ></p>
+        </div>
+{#        全部文件#}
+         <div class="document">
+         <div>
+         <button type="button" class=" SelfBtn btn btn-default" aria-label="Left Align" onclick="AllDoeument()">
+  <span class="glyphicon glyphicon-file" aria-hidden="true"></span>全部文件
+</button>
+    </div>
+    <div class="text"></div>
+        </div>
+         <div id="dirs"style="border-top: 1px solid #b9b6b0">
+            <P id="nowdir" style="display: none">C:\Users\master\Desktop\测试</P>
+            <p id="nowingdir"></p>
+             <p id="oldDir" style="display: none"></p>
+        </div>
+{#        表格文件#}
+    <table class="table table-hover">
+        <tr style="background-color: #ffffff">
+            <th class="tablename">文件名</th>
+            <th>修改时间</th>
+            <th>最近修改人</th>
+            <th>大小</th>
+        </tr>
+    </table>
+    </div>
+
+<div class="rightdiv">
+{#    好友#}
+    <div class="ChatTools">
+        <div>
+            <button type="button" class="ChatFriends" onclick="Friends()">
+            <span><img src="/static/img/(Friends_tab_selected)_SFont.CN.png"></span>
+            </button> </div>
+    </div>
+    <div id="message"></div>
+    <div id="setmessage">
+    <textarea id="msg" style="width: 375px;height:100px;resize: none;border-right: none;border: 1px solid #b9b6b0"></textarea>
+    <button>发送</button>
+</div>
+</div>
+<div id="menu">
+<li id="renamed" >重命名</li>
+<li id="deleted">删除</li>
+<li>下载到本地</li>
+</div>
+</body>
+<script type="text/javascript">
+	<!--点击文件夹加载事件-->
+    $('body').on('click','#f',function () {
+    $(".table td").remove()
+    $.ajax({
+        url:'/index333/',
+        type:'GET',
+        data:{'dir':$(this).text(),'nowdir':$("#nowdir").text()},
+        traditional:true,
+        success:function (data) {
+           TableGetJson(data)
+        },
+        error:function () {
+            alert("返回数据错误")
+        }
+    })
+})
+<!--点击表格文件夹加载事件-->
+   $('body').on('click','#fd',function () {
+    $(".table td").remove()
+    $.ajax({
+        url:'/index333/',
+        type:'GET',
+        data:{'dir':$(this).text(),'nowdir':$("#nowingdir").text()},
+        traditional:true,
+        success:function (data) {
+           TableGetJson(data)
+        },
+        error:function () {
+            alert("返回数据错误")
+        }
+    })
+})
+<!--点击文件加载事件-->
+$('body').on('click','#fsd',function () {
+    $(".table td").remove()
+    $(".FocusFilename").text($(this).text())
+    $.ajax({
+        url: '/index336/',
+        type: 'POST',
+        data: {'dir': $(this).text(), 'nowdir': $("#nowingdir").text()},
+        traditional: true,
+        success: function (data) {
+            MKDocumentText(data)
+        },
+        error: function () {
+            alert("返回数据错误")
+        }
+    })
+})
+<!--列举朋友-->
+    $("#friendsList").click(function () {
+        $.ajax({
+            url:'/index339/',
+            type:'GET',
+            data:{'name':$("#useringname").text()},
+            tradtional:true,
+            success:function (data) {
+                alert(data)
+            }
+        })
+    })
+</script>
+<!--右键菜单-->
+<script type="text/javascript">
+    var xfd
+    $('body').on('mousedown','td',function (e) {
+        if (e.which == 3) {
+            $('.table td').contextmenu(function () {
+                xfd=$(this)
+                var mousex = e.pageY;
+                var mousey = e.pageY;
+                $("#menu").css({
+                    'left': mousex,
+                    'top': mousey
+                }).show();
+                return false;
+            })
+        }
+        })
+    $(document).click(function () {
+        $("#menu").hide();
+    })
+    <!--重命名文件夹和文件-->
+    $("#renamed").click(function () {
+        var txt=xfd.text()
+        var x=prompt("请输入新的文件夹名称")
+            if (x != txt) {
+                $.ajax({
+                    url: '/index337/',
+                    type: 'GET',
+                    data: {'dir': x,'oldDir':txt ,'nowdir':$('#nowingdir').text()},
+                    trational: true,
+                    success: function (data) {
+                        if(data != 1){
+                            alert("修改成功")
+                            $(".text").empty();
+                            $(".table td").remove()
+                            GetJson(data)
+                        }
+                        else{
+                            return false
+                        }
+                    },
+                    error:function () {
+                        alert("返回数据错误")
+                    }
+                })
+            }
+            else{
+                alert("修改失败")
+            }
+        })
+    <!--删除文件夹和文件-->
+    $("#deleted").click(function () {
+        var msg="确定要删除吗"
+        var txt=xfd.text()
+        if(confirm(msg)==true){
+            $.ajax({
+                url:'/index338/',
+                type:'GET',
+                data:{'dir':txt,'nowdir':$("#nowingdir").text()},
+                trational:true,
+                success:function (data) {
+                    alert("删除成功");
+                     $(".text").empty();
+                     $(".table td").remove();
+                    GetJson(data);
+                },
+                error:function () {
+                    alert("返回数据错误");
+                }
+            })
+        }
+        else{
+            return false;
+        }
+    })
+</script>
+<!--聊天-->
+{% block bottom-js %}
+<script>
+    var csrftoken = getCookie('csrftoken');
+    $(document).ready(function () {
+                $.ajaxSetup({
+            beforeSend:function (xhr,setting) {
+                if(!csrfSafeMethod(setting.type)&&!this.crossDomain){
+                    xhr.setRequestHeader("X-CSRFToken",csrftoken);
+                }
+            }
+        })
+        GetNewmessage();
+        $("body").delegate('textarea',"keydown",function(e){
+            if(e.which==13){
+                var msg_text=$("#msg").val();
+                e.returnValue=false
+                if($.trim(msg_text).length>0){
+                    AddSentmessageIntodiv(msg_text);
+                    sendMessage(msg_text);
+                    $("#msg").val("")
+                    e.preventDefault();
+                }
+            }
+        })
+    })
+    function AddSentmessageIntodiv(msg_text) {
+                var new_msg_ele = "<div class='msg-item'>" +
+                            "<span id=msg_span>"+ "{{ request.session.user_name }}"+"</span>" +
+                            "<span id=msg_span>"+ new Date().toLocaleTimeString()+"</span>" +
+                            "<div class='msg-text'>" + msg_text+ "</div>" +
+                          "</div>";
+        $("#message").append(new_msg_ele);
+        $("#message").animate({scrollTop:$('#message').height()},500);
+    }
+    function sendMessage(msg_text) {
+        var msg_item ={
+            'from':$("#useringname").text(),
+            'msg':msg_text
+        };
+        $.post("{% url 'send_msg' %}",{data:JSON.stringify(msg_item)},function(callback){
+            console.log(callback);
+        });
+    }
+    function GetNewmessage() {
+        $.getJSON("{% url 'get_new_msg' %}",function (callback){
+            seemessage(callback);
+            GetNewmessage();
+        });
+    }
+</script>
+<script>
+    $("body").delegate("input","keydown",function (e) {
+        $(".FriendP").remove()
+        if (e.which==13){
+            var GetUserName=$(".FindFriendsName").val();
+            if($.trim(GetUserName).length>0){
+                $.ajax({
+                    url:"/index344/",
+                    type:"GET",
+                    data:{"name":GetUserName},
+                    traditional:true,
+                    success:function (data) {
+                        if(data=="1"){
+                            alert("没有此用户")
+                        }
+                        else{
+                            $(".FindFriendDiv").append("<p class='form-control FriendP'onclick='AddFriends()'>"+data+"</p>")
+                        }
+                    }
+                })
+            }else {
+                alert("请输入正确的用户名")
+            }
+        }
+    })
+</script>
+</html>
+{% endblock %}

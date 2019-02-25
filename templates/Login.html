@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="../static/boostrap/css/bootstrap.min.css" rel="stylesheet" />
+<link href="../static/css/Login.css" rel="stylesheet"/>
+</head>
+<body>
+<Script language="JavaScript">
+function ClickZC() {
+    window.location.href="http://127.0.0.1:8000/Register/"
+}
+</Script>
+ <div id="container">
+ <form class="form-signin" action="/Login/" method="post">
+ <h2 class="form-signin-heading">欢迎登陆</h2>
+  {% if message %}
+                  <div>{{ message }}</div>
+              {% endif %}
+ {% csrf_token %}
+<div class="form-group">
+{{ login_form.username.label_tag}}
+ {{ login_form.username }}
+</div>
+<div class="form-group">
+ {{ login_form.password.label_tag }}
+ {{ login_form.password }}
+</div>
+ <div class="form-group">
+                  {{ login_form.captcha.errors }}
+                  {{ login_form.captcha.label_tag }}
+                  {{ login_form.captcha }}
+ </div>
+ <button class="btn btn-lg btn-primary btn-block" type="submit" >登陆</button>
+ <button class="btn btn-lg btn-primary btn-block" type="button" onclick="ClickZC()">注册</button>
+ </form> 
+ </div>
+</body>
+</html>

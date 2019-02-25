@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
+<head>
+    <link href="../static/boostrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../static/css/Login.css" rel="stylesheet"/>
+    <meta charset="UTF-8">
+</head>
+<body>
+<div id="container">
+ <form class="form-signin" action="/Register/" method="post">
+ <h2 class="form-signin-heading">欢迎注册</h2>
+      {% if message %}
+                  <div>{{ message }}</div>
+              {% endif %}
+     {% csrf_token %}
+     <div class="form-group">
+         {{ register_form.username.label_tag}}
+         {{ register_form.username}}
+         </div>
+     <div class="form-group">
+         {{  register_form.password1.label_tag }}
+         {{  register_form.password1 }}
+         </div>
+     <div class="form-group">
+         {{  register_form.password2.label_tag }}
+         {{  register_form.password2 }}
+         </div>
+     <div class="form-group">
+         {{  register_form.email.label_tag }}
+         {{  register_form.email }}
+         </div>
+     <div class="form-group">
+         {{  register_form.sex.label_tag }}
+         {{  register_form.sex}}
+         </div>
+     <div class="form-group">
+         {{ register_form.captcha.errors }}
+         {{ register_form.captcha.label_tag }}
+         {{ register_form.captcha }}
+         </div>
+<button class="btn btn-lg btn-primary btn-block" type="submit" >注册</button>
+      </form>
+</div>
+</body>
+</html>

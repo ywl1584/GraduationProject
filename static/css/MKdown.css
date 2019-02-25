@@ -1,0 +1,130 @@
+@charset "utf-8";
+                .leftdiv {
+            background-color: #F8F8F8;
+            width: 240px;
+            height: 915px;
+            margin-top: -20px;
+            border-right:1px  solid #F8F8F8;
+        }
+                .rightdiv{
+            width: 380px;
+            height: 915px;
+            margin-top: -915px;
+            border-right:1px  solid #f8f8f8;
+            float: right;
+        }
+        .centerdiv{
+            width: 1300px;
+            height: 915px;
+            margin-top: -915px;
+            margin-left: 240px;
+        }
+        #menu{
+             width: 150px;
+            display: none;
+            position: absolute;
+            list-style: none;
+            background-color: #ffffff;
+            border-radius: 2px;
+			border:2px solid #CCC;
+        }
+                li{
+            list-style: none;
+            height: 35px;
+        }
+                li:hover{
+                    cursor: pointer;
+                }
+          .text a{
+              text-decoration: none;
+              color: #0f0f0f;
+              margin-top: 8px;
+              margin-left: 8px;
+          }
+          .text img{
+              height: 20px;
+              width: 20px;
+          }
+
+           .FindFriendDiv P:hover, .text li:hover,.btn:hover{
+              background-color: rgba(118, 176, 243, 0.3);
+               cursor: pointer;
+          }
+           .table{
+            width: 1150px;
+            float: left;
+
+        }
+        .tablename{
+            width: 400px;
+            color: #0f0f0f;
+        }
+        .text li,.table a{
+            color: #0f0f0f;
+            margin-left: 10px;
+            margin-top: 10px;
+        }
+       span img,.table img{
+            height: 25px;
+            width: 25px;
+        }
+        .toolsdiv{
+            height: 60px;
+        }
+        .document{
+            width: 150px;
+            height: 855px;
+            border: 1px solid #b9b6b0;
+            border-bottom: none;
+            float: left;
+        }
+         #menu li:hover{
+            background-color: #b9b6b0;
+			cursor:pointer;
+        }
+        #message{
+            border-left: 1px solid #b9b6b0;
+            border-top: 1px solid #b9b6b0;
+            height: 660px;
+            overflow: auto;
+        }
+        #setmessage{
+            border: 1px solid #b9b6b0;
+            border-right: none;
+            height:150px;
+        }
+        .SelfBtn {
+            width: 147px;
+            border: none;
+        }
+        .ChatTools{
+            height: 60px;
+        }
+        .FindFriendDiv{
+            width: 300px;
+            height: 150px;
+            margin-left: 20px;
+            margin-top: 20px;
+            border: 1px solid #b9b6b0;
+        }
+        .FindFriendDiv p{
+            text-align: center;
+            width: 250px;
+            margin-left: 25px;
+        }
+        .FindFriendDiv input{
+            width: 250px;
+            margin-left: 25px;
+        }
+        .FocusFilename{
+            text-align: center;
+            margin-top: -30px;
+        }
+        .ListF{
+            margin-left: 25px;
+            margin-top: 25px;
+        }
+        .background_div{
+			background-color:rgba(220,220,220,0.5);
+			position: absolute;
+		}
